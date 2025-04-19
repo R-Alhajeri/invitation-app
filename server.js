@@ -1,31 +1,28 @@
 const express = require("express");
-const cors = require("cors");
-const path = require("path");
-
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
 
-app.use(cors());
+// لتتمكن من استخدام البيانات التي تُرسل على شكل JSON
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
 
-let latestResponse = "";
+// تخزين الإجابات في الذاكرة
+let answers = [];
 
-app.post("/response", (req, res) => {
+// نقطة النهاية لاستلام الإجابة
+app.post("/send-email", async (req, res) => {
   const { choice } = req.body;
-  if (choice) {
-    latestResponse = choice;
-    console.log("Received response:", choice);
-    res.status(200).json({ message: "تم استلام ردك ❤️" });
-  } else {
-    res.status(400).json({ message: "لم يتم استلام اختيار" });
+  try {
+    // حفظ الإجابة في الذاكرة
+    answers.push(choice);
+    console.log(`تم حفظ الإجابة: ${choice}`);
+    res.status(200).send("تم إرسال الرد بنجاح!");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("حدث خطأ أثناء إرسال الرد 💔");
   }
 });
 
-app.get("/latest-response", (req, res) => {
-  res.status(200).json({ choice: latestResponse });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// تشغيل الخادم
+app.listen(port, () => {
+  console.log(`الخادم يعمل على http://localhost:${port}`);
 });

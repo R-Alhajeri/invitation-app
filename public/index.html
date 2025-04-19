@@ -1,41 +1,71 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>دعوة مسائية ❤️</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>دعوة تمشية مسائية</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f0f0f0;
+      }
+      h1 {
+        color: #4caf50;
+      }
+      .question {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+      .button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .button:hover {
+        background-color: #4caf50;
+        color: white;
+      }
+      #responseMessage {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <h1>إلى زوجتي الحلوة 🌹</h1>
+    <h1>هل ترغبين في تمشية مسائية جميلة معًا؟</h1>
+    <div class="question">اختاري أحد الأماكن:</div>
+    <button class="button" onclick="sendAnswer('مجمع ويرهاوس')">
+      مجمع ويرهاوس
+    </button>
+    <button class="button" onclick="sendAnswer('الكوت')">الكوت</button>
+    <button class="button" onclick="sendAnswer('الأحمدي')">الأحمدي</button>
 
-      <!-- النص الأساسي الذي سيختفي بعد الاختيار -->
-      <p id="invitationMessage">هل ترغبين في تمشية مسائية جميلة معًا؟</p>
+    <div id="responseMessage"></div>
 
-      <!-- عرض خيارين: أوافق / لا أوافق -->
-      <div id="initialBtnDiv">
-        <button id="acceptBtn">أوافق 💖</button>
-        <button id="declineBtn">لا أوافق 😔</button>
-      </div>
+    <script>
+      async function sendAnswer(choice) {
+        try {
+          const response = await fetch("http://localhost:3000/send-email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ choice }),
+          });
 
-      <!-- عرض الخيارات بعد الموافقة -->
-      <div id="options" class="hidden">
-        <p>أين تفضلين أن نذهب؟</p>
-        <button class="choice">مجمع ويرهاوس</button>
-        <button class="choice">الكوت</button>
-        <button class="choice">الأحمدي</button>
-      </div>
-
-      <p id="responseMsg"></p>
-    </div>
-
-    <div class="hearts"></div>
-
-    <audio autoplay loop>
-      <source src="music.mp3" type="audio/mpeg" />
-    </audio>
-
-    <script src="script.js"></script>
+          const result = await response.text();
+          document.getElementById("responseMessage").innerText = result;
+        } catch (error) {
+          alert("حدث خطأ أثناء إرسال الرد 💔");
+        }
+      }
+    </script>
   </body>
 </html>
