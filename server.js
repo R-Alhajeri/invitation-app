@@ -19,8 +19,8 @@ let answers = [];
 app.post("/send-email", (req, res) => {
   const { choice } = req.body;
 
-  // Simulate an error response
-  const simulateError = true;
+  // Simulate an error response (toggle via query parameter or environment variable)
+  const simulateError = process.env.SIMULATE_ERROR === "true";
 
   if (simulateError) {
     return res.status(500).send("حدث خطأ أثناء إرسال الرد 💔");
