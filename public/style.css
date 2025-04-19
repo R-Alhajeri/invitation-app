@@ -1,0 +1,71 @@
+body {
+  margin: 0;
+  font-family: "Tahoma", sans-serif;
+  background: linear-gradient(to top left, #ffe3e3, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  text-align: center;
+}
+
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 0, 102, 0.2);
+  width: 90%;
+  max-width: 400px;
+}
+
+h1 {
+  color: #d63384;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 1rem 0;
+}
+
+button {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  margin: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff1493;
+}
+
+.hidden {
+  display: none;
+}
+
+.hearts::before {
+  content: "❤️";
+  font-size: 2rem;
+  position: absolute;
+  animation: float 5s linear infinite;
+  top: 100%;
+  left: 50%;
+}
+
+@keyframes float {
+  0% {
+    top: 100%;
+    opacity: 1;
+  }
+  100% {
+    top: -10%;
+    opacity: 0;
+  }
+}

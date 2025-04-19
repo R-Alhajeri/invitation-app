@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دعوة مسائية ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>إلى زوجتي الحلوة 🌹</h1>
+
+      <!-- النص الأساسي الذي سيختفي بعد الاختيار -->
+      <p id="invitationMessage">هل ترغبين في تمشية مسائية جميلة معًا؟</p>
+
+      <!-- عرض خيارين: أوافق / لا أوافق -->
+      <div id="initialBtnDiv">
+        <button id="acceptBtn">أوافق 💖</button>
+        <button id="declineBtn">لا أوافق 😔</button>
+      </div>
+
+      <!-- عرض الخيارات بعد الموافقة -->
+      <div id="options" class="hidden">
+        <p>أين تفضلين أن نذهب؟</p>
+        <button class="choice">مجمع ويرهاوس</button>
+        <button class="choice">الكوت</button>
+        <button class="choice">الأحمدي</button>
+      </div>
+
+      <p id="responseMsg"></p>
+    </div>
+
+    <div class="hearts"></div>
+
+    <audio autoplay loop>
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
