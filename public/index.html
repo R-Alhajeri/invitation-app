@@ -6,35 +6,50 @@
     <title>دعوة تمشية مسائية</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Cursive", Arial, sans-serif;
         text-align: center;
         padding: 50px;
-        background-color: #f0f0f0;
+        background-color: #fff; /* White background */
+        background-image: url("https://i.imgur.com/3XQZ8yF.jpg"),
+          url("https://i.imgur.com/8QZQZ8y.png"); /* Optional romantic accents */
+        background-size: contain, cover;
+        background-repeat: no-repeat, no-repeat;
+        background-position: center top, center bottom;
+        color: #333;
       }
       h1 {
-        color: #4caf50;
+        color: #ff6f91;
+        font-size: 42px;
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
       }
       .question {
-        font-size: 20px;
-        margin-bottom: 20px;
+        font-size: 24px;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
       }
       .button {
-        font-size: 18px;
-        padding: 10px 20px;
-        margin: 10px;
+        font-size: 22px;
+        padding: 15px 30px;
+        margin: 15px;
         cursor: pointer;
         border: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
+        border-radius: 30px;
+        background-color: #ff6f91;
+        color: white;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
       }
       .button:hover {
-        background-color: #4caf50;
-        color: white;
+        background-color: #ff3d68;
+        transform: scale(1.1);
       }
       #responseMessage {
-        margin-top: 20px;
-        font-size: 18px;
+        margin-top: 40px;
+        font-size: 22px;
         font-weight: bold;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        color: #ff6f91;
       }
     </style>
   </head>
@@ -52,18 +67,22 @@
     <script>
       async function sendAnswer(choice) {
         try {
-          const response = await fetch("http://localhost:3000/send-email", {
+          const response = await fetch("/send-email", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ choice }),
           });
+
+          if (!response.ok) {
+            throw new Error(await response.text());
+          }
 
           const result = await response.text();
           document.getElementById("responseMessage").innerText = result;
         } catch (error) {
-          alert("حدث خطأ أثناء إرسال الرد 💔");
+          document.getElementById(
+            "responseMessage"
+          ).innerText = `عذرًا، ${error.message}`;
         }
       }
     </script>

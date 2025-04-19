@@ -1,30 +1,45 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Enable CORS for cross-origin requests
+app.use(cors());
+
+// Middleware to parse JSON requests
 app.use(express.json());
-app.use(express.static("public")); // لو عندك ملفات frontend
 
-// تخزين الإجابات في الذاكرة
+// Serve static files from the "public" directory
+app.use(express.static("public"));
+
+// In-memory storage for answers
 let answers = [];
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
-});
 
-// لحفظ الإجابة
-app.post("/send-email", async (req, res) => {
+// Endpoint to save the user's choice
+app.post("/send-email", (req, res) => {
   const { choice } = req.body;
+
+  // Simulate an error response
+  const simulateError = true;
+
+  if (simulateError) {
+    return res.status(500).send("حدث خطأ أثناء إرسال الرد 💔");
+  }
+
   try {
+    if (!choice) {
+      return res.status(400).send("الاختيار مطلوب!");
+    }
     answers.push(choice);
     console.log(`تم حفظ الإجابة: ${choice}`);
     res.status(200).send("تم إرسال الرد بنجاح!");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("حدث خطأ أثناء إرسال الرد 💔");
+    console.error("Error:", error);
+    res.status(500).send("حدث خطأ غير متوقع 💔");
   }
 });
 
-// صفحة مخفية تعرض الإجابات
+// Endpoint to display stored answers
 app.get("/hidden", (req, res) => {
   let html = `
     <h2>الإجابات المخزنة:</h2>
@@ -35,7 +50,7 @@ app.get("/hidden", (req, res) => {
   res.send(html);
 });
 
-// تشغيل الخادم
+// Start the server
 app.listen(port, () => {
   console.log(`الخادم يعمل على http://localhost:${port}`);
 });
